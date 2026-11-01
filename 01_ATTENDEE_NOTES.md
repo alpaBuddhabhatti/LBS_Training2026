@@ -22,6 +22,9 @@ participants do not need .NET. Run `code --version`, `az version` and
 Open [the assigned-resource sheet](04_ASSIGNED_RESOURCES.csv). Placeholders are
 not working resource names. Confirm your approved account, target and permissions.
 Reader visibility alone is not SQL, Blob, query or messaging data access.
+Read the [firewall, trusted-services and IAM notes](05_NETWORK_FIREWALL_AND_ACCESS_NOTES.md).
+They explain the SQL client-IP/Azure-services rules, Storage's different
+trusted-service exception and the separate network, identity and permission checks.
 
 ## Day 1 - separate components
 

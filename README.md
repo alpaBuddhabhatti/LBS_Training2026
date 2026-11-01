@@ -28,6 +28,8 @@ VS Code; the repository root is not one combined application.
 
 1. Read the [prerequisites](02_Pre_Course_Setup_And_Prerequisites_Guide.md).
 2. Obtain approved targets/access using the [resource template](04_ASSIGNED_RESOURCES.csv).
+   Read the [firewall, trusted-services and IAM notes](05_NETWORK_FIREWALL_AND_ACCESS_NOTES.md)
+   before the Azure exercises; configuration changes require owner approval.
 3. Follow [Day 1 order](<Day 1/00_DAY_1_ORDER.pdf>), then
    [Day 2 order](<Day 2/00_DAY_2_ORDER.pdf>).
 4. Record Passed, Blocked or Not run; identify live, prepared or offline work.

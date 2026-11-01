@@ -19,6 +19,7 @@ links work. Do not run projects from ZIP preview or mix different editions.
 | Self-study notes | [Attendee notes](01_ATTENDEE_NOTES.md) | Commands, expected results and recovery |
 | Progress record | [Evidence checklist](03_MY_LAB_EVIDENCE.csv) | Record your own Passed / Blocked / Not run results |
 | Assigned resources | [Resource sheet](04_ASSIGNED_RESOURCES.csv) | Organiser supplies approved targets and access privately |
+| Access and networking | [Firewall, trusted services and IAM](05_NETWORK_FIREWALL_AND_ACCESS_NOTES.md) | Client IPs, SQL Azure-services exception, Storage bypass and scoped data permissions |
 
 Every Word handout also has a PDF with the same base filename, for attendees
 without Word. Keep the editable originals and PDFs together.

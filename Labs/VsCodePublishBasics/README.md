@@ -50,6 +50,10 @@ This is a fixed sample response, not a SQL/Blob/Service Bus integration.
 ## Cloud test-only checkpoint
 
 Use only the organiser-approved Function App containing `ApplicationStatus`.
+Verify that function is listed before testing. If the assigned shared app
+contains only tracker timer/Service Bus Functions, keep this HTTP example local
+and record its cloud HTTP checkpoints Blocked / Not run. Do not replace the
+tracker deployment; obtain a separately approved compatible HTTP sample target.
 Do not publish to it. In Get Function URL select **default (Function key)**,
 not either Host key option. Copy the full URL directly into your browser,
 not chat or evidence. Expect the same JSON.
