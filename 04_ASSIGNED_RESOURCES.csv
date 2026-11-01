@@ -1,0 +1,17 @@
+Item,AssignedValue,OwnerPreparedAccess,AttendeeCheck
+Tenant,YOUR-ASSIGNED-TENANT,Approved organisational account and MFA,Confirm selected directory
+Subscription,YOUR-ASSIGNED-SUBSCRIPTION,Scoped resource visibility,Confirm approved subscription
+Resource group,YOUR-ASSIGNED-RESOURCE-GROUP,Scoped discovery,Open assigned resource Overview
+SQL hostname,YOUR-ASSIGNED-SQL-SERVER.database.windows.net,Approved network and database authentication,Connection query returns assigned database
+SQL database,YOUR-ASSIGNED-DATABASE,SELECT plus writes only if approved,Do not use master
+SQL read table,dbo.VsCodeItems_assigned,Owner confirms actual name columns and SELECT,Replace placeholder in read-only scripts
+SQL write suffix,YOUR-UNIQUE-SUFFIX,Disposable write route only if approved,Replace ab01 everywhere before scripts 02 and 03
+Storage account,YOUR-ASSIGNED-STORAGE-ACCOUNT,Approved network and scoped Blob data role,Verify container access
+Blob container,YOUR-PRIVATE-ASSIGNED-CONTAINER,Isolated fictional lab data,Do not modify other attendees' blobs
+Log Analytics workspace,YOUR-ASSIGNED-WORKSPACE,Scoped query rights,Confirm workspace scope
+Workspace ID,YOUR-WORKSPACE-GUID,No workspace shared key needed,Use GUID from workspace Overview
+Function endpoint,OWNER-PROVIDES-ENDPOINT-PRIVATELY,Test-only and function key handled privately,Do not store key-bearing URL in this sheet
+Application Insights,YOUR-ASSIGNED-APPLICATION-INSIGHTS,Approved instrumented app and query rights,Or choose labelled prepared mode
+Service Bus namespace,YOUR-ASSIGNED-NAMESPACE,Discovery and approved data access,Confirm assigned namespace
+Service Bus queue,YOUR-ISOLATED-QUEUE,No competing consumers and approved sender receiver access,Settle only your own messages
+Cost scope,YOUR-APPROVED-COST-SCOPE,Authorised cost visibility,Or choose fictional CSV mode
