@@ -2,7 +2,7 @@
 
 Consolidated 29 October 2026. Fictional data only.
 
-Word edition: [attendee SQL handout](<../../Day 1/Basic_Lab_01_Azure_SQL_Portal_And_VS_Code.docx>).
+Complete attendee handout: [attendee SQL handout](<../../Day 1/Basic_Lab_01_Azure_SQL_Portal_And_VS_Code.md>).
 
 ## Before you start - choose your route
 

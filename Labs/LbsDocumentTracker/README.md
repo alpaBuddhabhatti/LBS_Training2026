@@ -33,7 +33,7 @@ detail pages to see how in-memory status is displayed.
 ## Attendee package
 
 This project is now included in `Labs\LbsDocumentTracker` in the attendee pack.
-The [Word guide](../../Day%202/LBS_Document_Tracker_Setup_And_Testing.docx) is in
+The [Markdown guide](../../Day%202/LBS_Document_Tracker_Setup_And_Testing.md) is in
 `Day 2`. Copy this project to your own computer before running it.
 It remains a local-only training sample, not a production-ready application.
 

@@ -1,6 +1,6 @@
 # Self-study notes and checkpoints
 
-Use the [start guide](00_START_HERE.md) and full Word handouts for explanations.
+Use the [start guide](00_START_HERE.md) and full Markdown handouts for explanations.
 Run PowerShell commands one at a time; stop on errors rather than treating a
 later command as proof the earlier one passed.
 
@@ -28,16 +28,16 @@ trusted-service exception and the separate network, identity and permission chec
 
 ## Day 1 - separate components
 
-1. **Orientation:** use [Day 1 order](<Day 1/00_DAY_1_ORDER.docx>) and the first
+1. **Orientation:** use [Day 1 order](<Day 1/00_DAY_1_ORDER.md>) and the first
    two parts of the Function handout. Select the assigned tenant/subscription.
-2. **SQL:** use the [SQL handout](<Day 1/Basic_Lab_01_Azure_SQL_Portal_And_VS_Code.docx>)
+2. **SQL:** use the [SQL handout](<Day 1/Basic_Lab_01_Azure_SQL_Portal_And_VS_Code.md>)
    and [scripts](Labs/PortalAndVsCodeBasics/Samples/Sql). Run the connection query
    in portal and Microsoft MSSQL in VS Code. Expect the assigned database, not
    `master`. On a read-only route, use only the table/columns approved by the owner.
    `VsCodeItems_assigned` is a placeholder. On an approved write route, replace
    `VsCodeItems_ab01` everywhere with your unique table name before using scripts
    02 and 03. Compare rows/schema from fresh executions in both clients.
-3. **Blob:** follow [the Blob handout](<Day 1/Basic_Lab_02_Blob_Storage_Portal_And_VS_Code.docx>).
+3. **Blob:** follow [the Blob handout](<Day 1/Basic_Lab_02_Blob_Storage_Portal_And_VS_Code.md>).
    Use the [two text samples](Labs/PortalAndVsCodeBasics/Samples/Storage) and your
    private assigned container. Complete portal-to-terminal and terminal-to-portal
    transfer checks. Compare each original/download SHA256 pair using
@@ -45,7 +45,7 @@ trusted-service exception and the separate network, identity and permission chec
 4. **Function:** follow [the core Function steps](Labs/VsCodePublishBasics/README.md).
    Expect the exact four-field fictional JSON. Local success does not prove cloud
    publishing or cloud-key enforcement. The shared cloud route is test-only.
-5. **Logs:** follow [the Logs handout](<Day 1/Basic_Lab_03_Log_Analytics_Portal_And_VS_Code.docx>).
+5. **Logs:** follow [the Logs handout](<Day 1/Basic_Lab_03_Log_Analytics_Portal_And_VS_Code.md>).
    Use the same query and Workspace ID in portal and terminal. Run from
    `Labs\PortalAndVsCodeBasics`:
 
@@ -59,26 +59,26 @@ Function telemetry. Workspace ID is the workspace GUID, not Subscription ID.
 
 ## Day 2 - cost and operations
 
-Follow [Day 2 order](<Day 2/00_DAY_2_ORDER.docx>), not the file numbering.
+Follow [Day 2 order](<Day 2/00_DAY_2_ORDER.md>), not the file numbering.
 
-1. **Cost, 10:00:** [cost handout](<Day 2/06_Cost_Management_Portal_Lab.docx>).
+1. **Cost, 10:00:** [cost handout](<Day 2/06_Cost_Management_Portal_Lab.md>).
    Compare equal seven-day periods, group by service and explain a change, an
    optimisation and its risk. Use [fictional costs](Labs/Day2Operations/fictional-costs.csv)
    when live billing is unavailable. These are invented GBP values, not Azure
    pricing. Budget design is required; creating a real budget is not.
-2. **Application Insights, 11:30:** [telemetry handout](<Day 2/02_Application_Insights_Portal_Lab.docx>).
+2. **Application Insights, 11:30:** [telemetry handout](<Day 2/02_Application_Insights_Portal_Lab.md>).
    Record scope/time/source; inspect requests, failures and dependencies only in
    an authorised, instrumented app. Otherwise label your work prepared/offline.
-3. **KQL, 13:30:** [KQL handout](<Day 2/03_KQL_Beginner_Hands_On.docx>).
+3. **KQL, 13:30:** [KQL handout](<Day 2/03_KQL_Beginner_Hands_On.md>).
    Choose one query mode in [Day2Operations](Labs/Day2Operations/README.md).
    Run files 01, 02 and 03 separately. Prepared data: five requests, two failures
    and two dependencies over 1000 ms. Include 28 October 2026 10:00-10:05 UTC in
    the time window. Live counts vary; offline CSV review is not query execution.
-4. **Service Bus, 15:00:** [queue handout](<Day 2/01_Service_Bus_Portal_Lab.docx>).
+4. **Service Bus, 15:00:** [queue handout](<Day 2/01_Service_Bus_Portal_Lab.md>).
    Use an assigned isolated queue with no competing consumer. Send one fictional
    message, note its MessageId, peek, then receive/settle only your own message.
    Sending is not proof of completed business processing.
-5. **Local tracker, 15:35:** [tracker handout](<Day 2/LBS_Document_Tracker_Setup_And_Testing.docx>).
+5. **Local tracker, 15:35:** [tracker handout](<Day 2/LBS_Document_Tracker_Setup_And_Testing.md>).
    From the pack root, run the checks:
 
 ```powershell
@@ -110,7 +110,7 @@ Expect `{"status":"ok"}` and `{"status":"ready","mode":"local-memory"}`.
 The app has no sign-in; keep it on loopback. Restarting clears all records.
 Press Ctrl+C in its terminal when finished.
 
-6. **Incident, 16:20:** [team exercise](<Day 2/04_Incident_And_Cost_Team_Exercise.docx>).
+6. **Incident, 16:20:** [team exercise](<Day 2/04_Incident_And_Cost_Team_Exercise.md>).
    Solo study: write the same investigation as a short individual report.
    Identify an observation, a hypothesis and the next safe read-only check.
    Correlation alone is not proof of root cause. Do not inject a live fault.

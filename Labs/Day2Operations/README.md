@@ -1,7 +1,7 @@
 # Day 2 operations exercises
 
-Use the [Day 2 order](<../../Day 2/00_DAY_2_ORDER.docx>) and the
-[KQL handout](<../../Day 2/03_KQL_Beginner_Hands_On.docx>).
+Use the [Day 2 order](<../../Day 2/00_DAY_2_ORDER.md>) and the
+[KQL handout](<../../Day 2/03_KQL_Beginner_Hands_On.md>).
 
 ## Choose one mode before starting
 

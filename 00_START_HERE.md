@@ -1,28 +1,27 @@
 # LBS Azure training - core attendee pack
 
 This is the **core attendee edition** of the two-day corporate training.
-Download or clone [LBS_Training2026](https://github.com/alpaBuddhabhatti/LBS_Training2026),
-or use the complete ZIP supplied by the organiser. Extract ZIP downloads to a
-writable local folder before use. Keep `Day 1`, `Day 2` and `Labs` together so
-links work. Do not run projects from ZIP preview or mix different editions.
+Use the complete ZIP supplied by the organiser for this Markdown-only edition.
+The GitHub link may still contain an earlier file-format edition. Extract the
+ZIP to a writable local folder before use. Keep `Day 1`, `Day 2` and `Labs`
+together so links work. Do not run projects from ZIP preview or mix editions.
 
 ## What is included
 
 | Material | Location | Use |
 | --- | --- | --- |
 | Preparation | [Prerequisites](02_Pre_Course_Setup_And_Prerequisites_Guide.md) | Install only the tools for your route |
-| Timetable | [Two-day timetable](00_Two_Day_Timetable.docx) | Both days: 09:45-17:30 |
-| Day 1 presentation | [PDF](<Day 1/LBS_Azure_Day_1_Attendee.pdf>) / [PowerPoint](<Day 1/LBS_Azure_Day_1_Attendee.pptx>) | Concepts and component demonstrations |
-| Day 1 handouts | [Day 1 order](<Day 1/00_DAY_1_ORDER.docx>) | Orientation, SQL, Blob, Function, Logs |
-| Day 2 presentation | [PDF](<Day 2/LBS_Azure_Day_2_Core.pdf>) / [PowerPoint](<Day 2/LBS_Azure_Day_2_Core.pptx>) | Core agenda, matching the handouts |
-| Day 2 handouts | [Day 2 order](<Day 2/00_DAY_2_ORDER.docx>) | Costs, telemetry, KQL, queue, local tracker, incident |
+| Timetable | [Two-day timetable](00_Two_Day_Timetable.md) | Both days: 09:45-17:30 |
+| Day 1 presentation | [PowerPoint](<Day 1/LBS_Azure_Day_1_Attendee.pptx>) | Concepts and component demonstrations |
+| Day 1 handouts | [Day 1 order](<Day 1/00_DAY_1_ORDER.md>) | Orientation, SQL, Blob, Function, Logs |
+| Day 2 presentation | [PowerPoint](<Day 2/LBS_Azure_Day_2_Core.pptx>) | Core agenda, matching the handouts |
+| Day 2 handouts | [Day 2 order](<Day 2/00_DAY_2_ORDER.md>) | Costs, telemetry, KQL, queue, local tracker, incident |
 | Self-study notes | [Attendee notes](01_ATTENDEE_NOTES.md) | Commands, expected results and recovery |
 | Progress record | [Evidence checklist](03_MY_LAB_EVIDENCE.csv) | Record your own Passed / Blocked / Not run results |
 | Assigned resources | [Resource sheet](04_ASSIGNED_RESOURCES.csv) | Organiser supplies approved targets and access privately |
 | Access and networking | [Firewall, trusted services and IAM](05_NETWORK_FIREWALL_AND_ACCESS_NOTES.md) | Client IPs, SQL Azure-services exception, Storage bypass and scoped data permissions |
 
-Every Word handout also has a PDF with the same base filename, for attendees
-without Word. Keep the editable originals and PDFs together.
+All attendee guides are Markdown files. Open them in any text editor or in VS Code.
 
 ## Start in this order
 

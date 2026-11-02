@@ -1,7 +1,7 @@
 # Core exercise - standalone HTTP Function
 
-Use [Day 1 order](<../../Day 1/00_DAY_1_ORDER.docx>) and the
-[Function handout](<../../Day 1/Basic_Lab_VS_Code_Azure_Function_And_Dummy_Tracker.docx>).
+Use [Day 1 order](<../../Day 1/00_DAY_1_ORDER.md>) and the
+[Function handout](<../../Day 1/Basic_Lab_VS_Code_Azure_Function_And_Dummy_Tracker.md>).
 Parts 1-2 are orientation; Parts 3 and 5 cover local execution and approved cloud
 testing. Skip publishing and dummy-website extensions in this core pack.
 

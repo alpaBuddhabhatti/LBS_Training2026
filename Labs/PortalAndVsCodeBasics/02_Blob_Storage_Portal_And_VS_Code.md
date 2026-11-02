@@ -1,6 +1,6 @@
 # Blob Storage exercise
 
-Follow the [complete Blob handout](../../Day%201/Basic_Lab_02_Blob_Storage_Portal_And_VS_Code.docx).
+Follow the [complete Blob handout](../../Day%201/Basic_Lab_02_Blob_Storage_Portal_And_VS_Code.md).
 It includes networking, scoped data access, a private attendee container,
 portal/VS Code transfers, download hash comparisons and safe cleanup.
 

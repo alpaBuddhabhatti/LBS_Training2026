@@ -1,6 +1,6 @@
 # Logs and KQL exercise
 
-Follow the [complete Logs/KQL handout](../../Day%201/Basic_Lab_03_Log_Analytics_Portal_And_VS_Code.docx).
+Follow the [complete Logs/KQL handout](../../Day%201/Basic_Lab_03_Log_Analytics_Portal_And_VS_Code.md).
 Use [Samples/Logs](Samples/Logs) for the supplied query and PowerShell runner.
 
 The main exercise returns three synthetic rows. Run it in the portal and

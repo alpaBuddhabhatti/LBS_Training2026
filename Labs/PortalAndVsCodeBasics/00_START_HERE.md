@@ -9,21 +9,21 @@ request JSON in sync when editing, including comments. Blob commands are
 explained in the [Storage guide](02_Blob_Storage_Portal_And_VS_Code.md);
 the sample text files are data, not executable scripts.
 
-Use the [illustrated Day 1 quick reference](<../../Day 1/Day_1_Illustrated_Quick_Reference.pdf>)
-alongside the full Word handouts. It includes tested commands, diagrams,
+Use the [illustrated Day 1 quick reference](<../../Day 1/Day_1_Illustrated_Quick_Reference.md>)
+alongside the full Markdown handouts. It includes tested commands, diagrams,
 expected results, troubleshooting and the final evidence checklist.
 
-Start with [Day 1 order](../../Day%201/00_DAY_1_ORDER.docx), then the
-[detailed learning route](../../Day%201/Basic_Lab_00_START_HERE.docx).
+Start with [Day 1 order](../../Day%201/00_DAY_1_ORDER.md), then the
+[detailed learning route](../../Day%201/Basic_Lab_00_START_HERE.md).
 
-Use the full Word handouts in `Day 1`; this folder contains their executable
+Use the full Markdown handouts in `Day 1`; this folder contains their executable
 samples, not a second or competing timetable.
 
-1. Orientation: [Function guide](../../Day%201/Basic_Lab_VS_Code_Azure_Function_And_Dummy_Tracker.docx), Parts 1-2 only.
-2. [SQL](../../Day%201/Basic_Lab_01_Azure_SQL_Portal_And_VS_Code.docx).
-3. [Blob Storage](../../Day%201/Basic_Lab_02_Blob_Storage_Portal_And_VS_Code.docx).
+1. Orientation: [Function guide](../../Day%201/Basic_Lab_VS_Code_Azure_Function_And_Dummy_Tracker.md), Parts 1-2 only.
+2. [SQL](../../Day%201/Basic_Lab_01_Azure_SQL_Portal_And_VS_Code.md).
+3. [Blob Storage](../../Day%201/Basic_Lab_02_Blob_Storage_Portal_And_VS_Code.md).
 4. Function guide, Parts 3-5 and Function evidence/cleanup in Part 8.
-5. [Logs/KQL](../../Day%201/Basic_Lab_03_Log_Analytics_Portal_And_VS_Code.docx).
+5. [Logs/KQL](../../Day%201/Basic_Lab_03_Log_Analytics_Portal_And_VS_Code.md).
 6. Optional local UI: Function guide, Parts 6-8, only when assigned.
 
 Open the relevant project folder in VS Code before running its commands.
@@ -32,7 +32,7 @@ Do not treat an unexecuted check as passed. Ask the instructor about blocked
 access; do not broaden network rules or permissions yourself.
 
 For remaining services and the realistic local scenario, follow
-[Day 2 order](../../Day%202/00_DAY_2_ORDER.docx).
+[Day 2 order](../../Day%202/00_DAY_2_ORDER.md).
 
 
 ---

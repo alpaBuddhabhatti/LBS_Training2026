@@ -4,8 +4,8 @@ Start with [00_START_HERE.md](00_START_HERE.md).
 
 This repository contains the core two-day corporate training materials:
 
-- **Presentations:** Day 1 and Day 2, PowerPoint and PDF.
-- **Handouts:** step-by-step lab instructions, Word and PDF.
+- **Presentations:** Day 1 and Day 2 in PowerPoint format.
+- **Handouts:** step-by-step lab instructions in Markdown format.
 - **[Attendee notes](01_ATTENDEE_NOTES.md):** commands, expected results and recovery.
 - **[Lab code](Labs):** independent component exercises and a local document tracker.
 - **Sample data:** fictional documents, SQL, KQL and operational CSVs.
@@ -13,13 +13,9 @@ This repository contains the core two-day corporate training materials:
 
 ## Download or clone
 
-Select **Code > Download ZIP**, then extract the entire archive before use.
-Alternatively:
-
-```powershell
-git clone https://github.com/alpaBuddhabhatti/LBS_Training2026.git
-Set-Location .\LBS_Training2026
-```
+Use the complete ZIP supplied by the organiser, then extract the entire archive
+before use. The GitHub repository may still have the earlier file-format edition;
+use the ZIP for this Markdown-only revision.
 
 Keep `Day 1`, `Day 2` and `Labs` together. Open one project folder at a time in
 VS Code; the repository root is not one combined application.
@@ -30,8 +26,8 @@ VS Code; the repository root is not one combined application.
 2. Obtain approved targets/access using the [resource template](04_ASSIGNED_RESOURCES.csv).
    Read the [firewall, trusted-services and IAM notes](05_NETWORK_FIREWALL_AND_ACCESS_NOTES.md)
    before the Azure exercises; configuration changes require owner approval.
-3. Follow [Day 1 order](<Day 1/00_DAY_1_ORDER.pdf>), then
-   [Day 2 order](<Day 2/00_DAY_2_ORDER.pdf>).
+3. Follow [Day 1 order](<Day 1/00_DAY_1_ORDER.md>), then
+   [Day 2 order](<Day 2/00_DAY_2_ORDER.md>).
 4. Record Passed, Blocked or Not run; identify live, prepared or offline work.
 
 Azure exercises require separately assigned resources, data permissions and an
