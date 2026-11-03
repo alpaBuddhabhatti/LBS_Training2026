@@ -13,9 +13,9 @@ This repository contains the core two-day corporate training materials:
 
 ## Download or clone
 
-Use the complete ZIP supplied by the organiser, then extract the entire archive
-before use. The GitHub repository may still have the earlier file-format edition;
-use the ZIP for this Markdown-only revision.
+Download this repository using Code > Download ZIP, clone it, or use the complete
+ZIP supplied by the organiser. Extract the entire archive before use.
+The repository and attendee ZIP use Markdown guides and PowerPoint presentations.
 
 Keep `Day 1`, `Day 2` and `Labs` together. Open one project folder at a time in
 VS Code; the repository root is not one combined application.
@@ -37,7 +37,9 @@ The local tracker runs without Azure, uses memory only and must not be published
 ## Verification and boundaries
 
 The supplied Function and tracker build with .NET 10. The tracker checks produce
-20 PASS lines; all ten fictional documents have been tested through HTTP uploads.
+20 PASS lines covering all ten samples through the worker, validation edge cases
+and worker shutdown. These executable checks do not test HTTP uploads;
+test the website separately using the tracker handout.
 See [attendee notes](01_ATTENDEE_NOTES.md) for reproducible commands.
 Function host invocation and live Azure checks remain environment-dependent;
 compilation is not evidence that these ran.

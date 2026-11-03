@@ -1,6 +1,11 @@
 # Day 1 illustrated quick reference
 
-Searchable page text with the original page layout preserved below each section. Fictional training data only.
+Searchable page text with the original rehearsal page layout preserved below each section. Fictional training data only.
+
+Use the current [Day 1 order](00_DAY_1_ORDER.md) and numbered handouts for
+copyable commands and the assigned route. The historical page images below are
+visual examples, not additional instructions or proof of your own results.
+The older dummy UI is not supplied; cloud Function testing is test-only.
 
 ## Page 1
 
@@ -18,8 +23,8 @@ Day 1 | Attendee quick reference
 
 
   Use ﬁctional training data only. Orientation, SQL, Blob Storage, the HTTP Function and Logs/KQL are
-  independent checkpoints. They do not form a connected document-processing application. The local dummy
-  UI is optional.
+  independent checkpoints. They do not form a connected document-processing application. The Day 2
+  tracker is a separate local-only exercise.
 
  Find the correct folder without losing your chat
 

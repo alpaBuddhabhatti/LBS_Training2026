@@ -13,7 +13,7 @@ CORE ATTENDEE EDITION: Start with 00_START_HERE.md at the pack root. Only the co
 |----|----|
 | Workspace | Instructor-assigned existing Log Analytics workspace |
 | New workspace only if approved | log-lbs-ab01 (your attendee ID) |
-| VS Code folder | C: |
+| VS Code folder | Your extracted pack's Labs\PortalAndVsCodeBasics folder |
 | Local query file | Samples\Logs\01-fictional-status.kql |
 | Terminal script | Samples\Logs\Invoke-LabQuery.ps1 |
 | Access | Workspace query permission, for example Log Analytics Reader |
@@ -50,13 +50,15 @@ Access to resource Overview does not necessarily mean permission to query logs. 
 
 2.  Copy the complete query into a new portal Logs query tab:
 
-- datatable(Reference:string, Status:string)
-      [
-          "LBS-DEMO-1001", "Completed",
-          "LBS-DEMO-1002", "Needs review",
-          "LBS-DEMO-1003", "Received"
-      ]
-      | order by Reference asc
+```kusto
+datatable(Reference:string, Status:string)
+[
+    "LBS-DEMO-1001", "Completed",
+    "LBS-DEMO-1002", "Needs review",
+    "LBS-DEMO-1003", "Received"
+]
+| order by Reference asc
+```
 
 3.  Select **Run**.
 
@@ -80,16 +82,20 @@ Access to resource Overview does not necessarily mean permission to query logs. 
 
 3.  Run:
 
-- Get-Location
-      Test-Path .\Samples\Logs\01-fictional-status.kql
-      az version
+```powershell
+Get-Location
+Test-Path .\Samples\Logs\01-fictional-status.kql
+az version
+```
 
 4.  Expect True and Azure CLI version output. If CLI is missing, install through the approved IT process and reopen the terminal.
 
 5.  Sign in:
 
-- az login
-      az account show --query "{name:name,id:id,tenant:tenantId}" -o table
+```powershell
+az login
+az account show --query "{name:name,id:id,tenant:tenantId}" -o table
+```
 
 6.  If needed, use `az account set --subscription "YOUR-SUBSCRIPTION-ID"` with the actual assigned ID, then verify again.
 
@@ -103,7 +109,9 @@ Access to resource Overview does not necessarily mean permission to query logs. 
 
 2.  Replace YOUR-WORKSPACE-ID with the GUID from Part 2:
 
-- .\Samples\Logs\Invoke-LabQuery.ps1 -WorkspaceId "YOUR-WORKSPACE-ID"
+```powershell
+.\Samples\Logs\Invoke-LabQuery.ps1 -WorkspaceId "YOUR-WORKSPACE-ID"
+```
 
 3.  Expected: the same three Reference/Status rows and a PASS message.
 
@@ -125,7 +133,14 @@ Only if the instructor confirms telemetry is connected and grants access:
 
 3.  If **AppRequests** exists, run:
 
-- AppRequests| where TimeGenerated > ago(1h)| where AppRoleName =~ "YOUR-ASSIGNED-FUNCTION"| project TimeGenerated, Name, ResultCode, Success, DurationMs| order by TimeGenerated desc| take 20
+```kusto
+AppRequests
+| where TimeGenerated > ago(1h)
+| where AppRoleName =~ "YOUR-ASSIGNED-FUNCTION"
+| project TimeGenerated, Name, ResultCode, Success, DurationMs
+| order by TimeGenerated desc
+| take 20
+```
 
 
 4.  Replace YOUR-ASSIGNED-FUNCTION if your assigned app has another role name. Confirm the actual AppRoleName with the instructor rather than guessing.
@@ -191,19 +206,23 @@ Open Logs. Close Welcome to Log Analytics with its top-right X. Queries hub is a
 
 If the top-right Agent toggle is on, turn it off to leave Observability Agent chat. Select KQL mode from the dropdown above the editor on the right. KQL means Kusto Query Language. Paste into the query editor, not Agent chat, then click Run on the editor toolbar.
 
-datatable(Reference:string, Status:string)\
-\[\
-"LBS-DEMO-1001", "Completed",\
-"LBS-DEMO-1002", "Needs review",\
-"LBS-DEMO-1003", "Received"\
-\]\
-\| order by Reference asc
+```kusto
+datatable(Reference:string, Status:string)
+[
+    "LBS-DEMO-1001", "Completed",
+    "LBS-DEMO-1002", "Needs review",
+    "LBS-DEMO-1003", "Received"
+]
+| order by Reference asc
+```
 
 Expect exactly three rows in Reference order: Completed, Needs review, Received. datatable makes an in-memory fictional result; it does not create/ingest a table or read Function logs. The pipe sends the result to the next operator. KQL identifiers are case-sensitive; do not paste SQL SELECT syntax here.
 
 In the existing VS Code terminal change to Labs\PortalAndVsCodeBasics. No new window is required. Confirm CLI sign-in, then run the supplied script with the same workspace's GUID.
 
+```powershell
 .\Samples\Logs\Invoke-LabQuery.ps1 -WorkspaceId "YOUR-WORKSPACE-ID"
+```
 
 Replace the placeholder. Expect the same three Reference/Status rows and PASS Azure Monitor query: exactly three expected fictional rows. The script checks the KQL and companion request JSON agree, submits a remote Azure Monitor query and validates exact values. Keep both query copies unchanged for the first comparison. A local .kql file is just saved text until submitted. If query access is denied, ask for scoped workspace access; do not grant yourself broader roles.
 

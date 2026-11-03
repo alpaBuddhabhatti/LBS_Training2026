@@ -16,7 +16,7 @@ Scenario, setup and testing guide \| V_3 \| 26 October 2026
 
 A local-only fictional document-processing website. Submit a small text file with an application reference, queue a background check, then inspect its status. The worker validates a training header, not creditworthiness or identity. Completed does not mean a financial application has been approved.
 
-Azure SQL, private Blob Storage, Service Bus, the Azure Function, Entra sign-in and Azure telemetry are not connected yet. The Azure resources were inspected read-only; none was changed. Local records disappear when the process stops. There is no authentication: use localhost only and never upload real data.
+Azure SQL, private Blob Storage, Service Bus, the Azure Function, Entra sign-in and Azure telemetry are not connected. This local exercise does not inspect or change Azure resources. Local records disappear when the process stops. There is no authentication: use localhost only and never upload real data.
 
 # 2. Files and prerequisites
 
@@ -26,11 +26,11 @@ Azure SQL, private Blob Storage, Service Bus, the Azure Function, Entra sign-in 
 
 - Architecture.svg: current local flow and proposed Azure target.
 
-- SampleData: four fictional text files plus cases.json with expected outcomes.
+- SampleData: ten fictional text files plus cases.json with expected outcomes. The first four are the scheduled manual practice; all ten are available for further testing.
 
 - Checks: package-free executable checking validation and the background worker.
 
-- README.md: project instructions and the existing Azure resource inventory.
+- README.md: project instructions and boundaries for a future Azure milestone. Obtain current assigned resources privately from the organiser.
 
 - Install the .NET 10 SDK, use Windows PowerShell and open the project in VS Code. The SDK, not just the runtime, is required. Confirm with dotnet --version.
 
@@ -40,26 +40,36 @@ Azure SQL, private Blob Storage, Service Bus, the Azure Function, Entra sign-in 
 
 Open a PowerShell terminal in the project folder. No Azure connection or running website is required. The command builds the project and checks the real validator and in-memory queue/worker.
 
-dotnet run --project .\Checks\LbsDocumentTracker.Checks.csproj -- "\$PWD\SampleData"
+```powershell
+dotnet run --project .\Checks\LbsDocumentTracker.Checks.csproj -- "$PWD\SampleData"
+```
 
 Expected: 20 PASS lines: ten worker scenarios, nine validation checks and worker shutdown. The process exits with code 0. Any failed assertion throws and exits unsuccessfully; do not treat a partial list of PASS lines as success.
 
-\$LASTEXITCODE
+```powershell
+$LASTEXITCODE
+```
+
+These checks exercise the worker and validator without HTTP. Test uploads separately in the website below.
 
 # 4. Start the website
 
 From the project folder, run:
 
-\$env:ASPNETCORE_ENVIRONMENT = 'Development'\
-\$env:DOTNET_ENVIRONMENT = 'Development'\
+```powershell
+$env:ASPNETCORE_ENVIRONMENT = 'Development'
+$env:DOTNET_ENVIRONMENT = 'Development'
 dotnet run --project .\LbsDocumentTracker.csproj --urls "http://localhost:5193"
+```
 
 Wait for 'Now listening on: http://localhost:5193', then open that address. The Development-only warning is intentional. Do not change the localhost binding to 0.0.0.0, expose a tunnel or host this unauthenticated version.
 
 In a second terminal, check:
 
-Invoke-RestMethod http://localhost:5193/healthz\
+```powershell
+Invoke-RestMethod http://localhost:5193/healthz
 Invoke-RestMethod http://localhost:5193/readyz
+```
 
 Expected: health status ok; readiness status ready and mode local-memory. These checks do not prove Azure connectivity.
 
@@ -73,6 +83,11 @@ On the dashboard select Submit a fictional text document. Enter the reference be
 | 02-missing-document-type.txt | LBS-DEMO-1002 | Needs review | DocumentType is absent. |
 | 03-reference-mismatch.txt | LBS-DEMO-1003 | Needs review | The file says LBS-DEMO-9999. |
 | 04-unsupported-document-type.txt | LBS-DEMO-1004 | Needs review | The declared type is not supported. |
+
+For the remaining six samples, use the matching form references in
+[cases.json](../Labs/LbsDocumentTracker/SampleData/cases.json). Across all ten,
+01, 05 and 06 should be Completed; the other seven should be Needs review.
+Record manual HTTP results separately from the executable checks.
 
 # 6. Additional test checklist
 
@@ -101,11 +116,15 @@ Logs identify jobs by generated document ID. The application does not log docume
 
 Press Ctrl+C in the server terminal. If port 5193 is occupied, either use localhost:5197 consistently or inspect its owner before stopping anything.
 
-Get-NetTCPConnection -LocalPort 5193 -State Listen \|\
-Select-Object LocalAddress, LocalPort, OwningProcess\
-Get-Process -Id \<confirmed-owning-process-id\>\
-\# Only after confirming this is your disposable test process:\
-Stop-Process -Id \<confirmed-owning-process-id\>
+```powershell
+Get-NetTCPConnection -LocalPort 5193 -State Listen |
+    Select-Object LocalAddress, LocalPort, OwningProcess
+```
+
+Use the returned PID to inspect the owner with `Get-Process -Id PID` (replace
+`PID` with the actual number). Only after confirming it is your disposable test
+process, stop that exact PID using `Stop-Process -Id PID`. Prefer Ctrl+C in the
+server's terminal.
 
 Never stop processes by name or reuse a previously recorded PID. If dotnet is missing, install the SDK or use its actual executable path. If the browser cannot connect, first verify startup output and the exact port.
 
@@ -113,4 +132,4 @@ Never stop processes by name or reuse a previously recorded PID. If dotnet is mi
 
 Run the supplied local scenario checks and record your own results. Local validation is not proof of Azure integration.
 
-Next: approved Azure connectivity, SQL/private Blob persistence, durable dispatch, idempotent Function processing, staff authentication and scoped authorisation, telemetry and cloud end-to-end tests. Confirm the current cloud runtime separately; do not deploy this .NET 10 website over a Function App. SQL public access is disabled; do not open it as a shortcut.
+Next: approved Azure connectivity, SQL/private Blob persistence, durable dispatch, idempotent Function processing, staff authentication and scoped authorisation, telemetry and cloud end-to-end tests. Confirm the current cloud runtime and assigned network configuration separately; do not deploy this .NET 10 website over a Function App or enable public SQL access as a shortcut.

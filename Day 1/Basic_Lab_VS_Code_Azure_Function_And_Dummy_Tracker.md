@@ -51,7 +51,6 @@ Use the supplied project names unchanged so all commands in this guide match. On
 | Function class / function name | `ApplicationStatus` | Becomes the /api/ApplicationStatus route |
 | Resource group | Instructor-assigned group, for example Training | Do not create a duplicate or use another group’s resources |
 | Local Function port | 7071 | Local HTTP Function address |
-| Local website port | 5203 | Local browser and test-script address |
 
 **Three names that are easy to confuse:** `HelloAzureFunction` is your local project; `ApplicationStatus` is the function inside it; `func-lbs-ab01-1028` is an example cloud host that runs the deployed project. They do not have to be the same name.
 
@@ -93,19 +92,17 @@ The instructor must provide these details before attendees start. Do not guess t
 
 6.  Look at the Explorer on the left. Confirm these items exist:
 
-- VsCodePublishBasics
-        HelloAzureFunction
-          HelloAzureFunction.csproj
-          ApplicationStatus.cs
-          Program.cs
-          host.json
-          local.settings.example.json
-        DummyDocumentTracker
-          DummyDocumentTracker.csproj
-          Program.cs
-          wwwroot
-        Test-PublishBasics.ps1
-        README.md
+```text
+VsCodePublishBasics
+  HelloAzureFunction
+    HelloAzureFunction.csproj
+    ApplicationStatus.cs
+    Program.cs
+    host.json
+    local.settings.example.json
+  Basic_Self_Paced_Lab.md
+  README.md
+```
 
 You are not using the older SQL sample or the original processing tracker. If you see only the SQL project, open the correct folder before continuing.
 
@@ -117,9 +114,11 @@ You are not using the older SQL sample or the original processing tracker. If yo
 
 3.  Run:
 
-- Get-Location
-      Get-ChildItem
-      Test-Path .\Test-PublishBasics.ps1
+```powershell
+Get-Location
+Get-ChildItem
+Test-Path .\HelloAzureFunction\HelloAzureFunction.csproj
+```
 
 4.  The last command must return `True`. If it returns `False`, navigate to your extracted **VsCodePublishBasics** folder and run the check again.
 
@@ -158,11 +157,13 @@ If `dotnet` is not recognised or SDK 10 is missing, stop and use your organisati
 
 3.  Run this in the terminal:
 
-- func --version
+```powershell
+func --version
+```
 
 4.  Expected: version `4.x`. The installed release must support .NET 10. If missing, use the instructor/IT-approved Azure Functions Core Tools v4 installation instructions at <https://learn.microsoft.com/azure/azure-functions/functions-run-local>. Reopen the terminal after installation.
 
-5.  Do not try `dotnet run` as a replacement for the Function host. This Function needs Core Tools (`func start`); the website later uses `dotnet run`.
+5.  Do not try `dotnet run` as a replacement for the Function host. This Function needs Core Tools (`func start`); the separate Day 2 tracker uses `dotnet run`.
 
 **Checkpoint 1:** you found the project, `Test-Path` returned True, SDK 10 is available, and Function prerequisites are ready. If Core Tools is blocked, record that limitation and use the cloud test route; do not claim a local Function test passed.
 
@@ -217,8 +218,10 @@ Do not open storage connection strings, copy secrets, change networking or delet
 
 4.  Open **Terminal \> New Terminal** and run:
 
-- Get-Location
-      Test-Path .\HelloAzureFunction.csproj
+```powershell
+Get-Location
+Test-Path .\HelloAzureFunction.csproj
+```
 
 5.  Confirm `True`. You must be inside the Function subfolder for these commands.
 
@@ -245,7 +248,9 @@ Never commit or publish local settings. If an existing settings file points at a
 
 3.  In the Function terminal run:
 
-- func start --port 7071
+```powershell
+func start --port 7071
+```
 
 4.  Wait for the host to list `ApplicationStatus` with an address resembling:
 
@@ -259,7 +264,9 @@ Never commit or publish local settings. If an existing settings file points at a
 
 2.  In the second terminal run:
 
-- Invoke-RestMethod "http://localhost:7071/api/ApplicationStatus"
+```powershell
+Invoke-RestMethod "http://localhost:7071/api/ApplicationStatus"
+```
 
 3.  Confirm:
 
@@ -276,7 +283,13 @@ Never commit or publish local settings. If an existing settings file points at a
 
 **Checkpoint 3:** record local Function result and time. Core Tools normally does not enforce keys locally; cloud key requirements are tested separately.
 
-If localhost times out but the host reports that it is listening, test the explicit loopback address, using the port printed by your host: curl.exe --noproxy "\*" --fail --max-time 20 http://127.0.0.1:7071/api/ApplicationStatus . Replace 7071 only if you started the host on another port. This bypass is limited to the local request; do not disable corporate proxies or security controls globally.
+If localhost times out but the host reports that it is listening, test the explicit loopback address, using the port printed by your host:
+
+```powershell
+curl.exe --noproxy "*" --fail --max-time 20 http://127.0.0.1:7071/api/ApplicationStatus
+```
+
+Replace 7071 only if you started the host on another port. This bypass is limited to the local request; do not disable corporate proxies or security controls globally.
 
 # Part 5 - Test the Function on Azure
 
@@ -349,7 +362,7 @@ Write the function name, time, HTTP status and whether all four response values 
 
 ## 8.2 Stop only your own local applications
 
-1.  Stop any remaining local Function host with Ctrl+C in the terminal running func start; wait for the PowerShell prompt. This stops only the local server, not the Azure Function App. On the shared-app test-only route, record publishing as Not run. After Function evidence and cleanup, continue to the Logs/KQL lab; the dummy website is optional.
+1.  Stop any remaining local Function host with Ctrl+C in the terminal running func start; wait for the PowerShell prompt. This stops only the local server, not the Azure Function App. On the core test-only route, record publishing as Not run. After Function evidence and cleanup, continue to the Logs/KQL lab. The dummy website is not supplied.
 2.  If you started Azurite for this exercise and no other work needs it, run **Azurite: Close** from the Command Palette.
 3.  Browser refresh failing after shutdown is expected.
 4.  Do not delete the shared **Training** resource group, Function App, plan, storage account or any other existing Azure resource.
@@ -359,11 +372,11 @@ Write the function name, time, HTTP status and whether all four response values 
 
 | **Symptom** | **Likely cause** | **What to do** |
 |----|----|----|
-| Unable to connect to the remote server on localhost:5203 | Website is stopped, still starting, failed, or using another port | Start Part 6 in Terminal 1; wait for Now listening; leave it running |
-| Browser tab exists but page will not load | A tab is not a running server | Start the website; confirm terminal output, then refresh |
+| Local Function URL cannot connect | Host is stopped, still starting, failed, or using another port | Follow Part 3.3; wait for the ApplicationStatus route and keep the host running |
+| Browser tab exists but page will not load | A tab is not a running server | Confirm Function host output and the exact URL, then retry |
 | func is not recognised | Core Tools missing or terminal PATH stale | Follow Part 1 prerequisites; reopen terminal; do not substitute dotnet run |
 | dotnet is not recognised | SDK missing or PATH stale | Use approved SDK install; reopen terminal |
-| NETSDK error about net10.0 | Wrong/older SDK selected | Check dotnet –list-sdks and ask instructor; do not downgrade blindly |
+| NETSDK error about net10.0 | Wrong/older SDK selected | Check dotnet --list-sdks and ask instructor; do not downgrade blindly |
 | Storage connection refused when starting Function | Azurite not running or port conflict | Start Azurite; inspect its output; keep emulator settings local |
 | Address already in use | Another process owns the port | Do not kill unrelated processes; inspect existing app or ask instructor |
 | PowerShell shows \>\> | Incomplete pasted command | Ctrl+C; paste the whole command with matching quotes |
@@ -372,7 +385,7 @@ Write the function name, time, HTTP status and whether all four response values 
 | Portal test cannot fetch / browser network error | Browser/network/CORS/access restrictions may block portal calls | Try the approved full Function URL; give instructor the non-secret error; do not change CORS/network rules blindly |
 | Function returns 404 or is not listed | Wrong target/path, deployment or indexing issue | Confirm app and /api/ApplicationStatus path; inspect deployment/host logs with instructor |
 
-If it is your running tracker, use it rather than starting a duplicate. Otherwise ask the instructor or use another agreed free port, for example:
+If the Function port is occupied, ask the instructor or choose an approved free loopback port and update both the host command and request URL.
 
 # Day 1 tested walkthrough - attendee support
 
@@ -386,22 +399,30 @@ Diagram: function local cloud
 
 Open Labs\VsCodePublishBasics\HelloAzureFunction. Confirm the .csproj, ApplicationStatus.cs and host.json are present. Use the approved .NET 10 SDK, .NET-10-compatible Core Tools v4 and Azurite. If func is not found, approved tools must be installed/enabled in this terminal. The instructor's portable Enable-LocalTrainingTools.ps1 helper is not a universal attendee prerequisite; use it only if supplied and approved.
 
-dotnet --list-sdks\
-func --version\
-if (-not (Test-Path '.\local.settings.json')) {\
-Copy-Item '.\local.settings.example.json' '.\local.settings.json'\
-}\
+```powershell
+dotnet --list-sdks
+func --version
+if (-not (Test-Path '.\local.settings.json')) {
+    Copy-Item '.\local.settings.example.json' '.\local.settings.json'
+}
 dotnet build
+```
 
 Do not overwrite existing local settings. The example uses local Azurite storage, not Azure account keys. Never publish local.settings.json. A successful build proves compilation only, not a running HTTP endpoint.
 
 Press Ctrl+Shift+P \> Azurite: Start. In terminal 1 run the host; keep it running until local tests finish. Open terminal 2 for the request.
 
-\# Terminal 1\
-func start --port 7071\
-\
-\# Terminal 2\
-curl.exe --noproxy "\*" --fail --max-time 20 http://127.0.0.1:7071/api/ApplicationStatus
+Terminal 1:
+
+```powershell
+func start --port 7071
+```
+
+Terminal 2:
+
+```powershell
+curl.exe --noproxy "*" --fail --max-time 20 http://127.0.0.1:7071/api/ApplicationStatus
+```
 
 Wait for the host to list ApplicationStatus: \[GET\] before testing. The explicit IPv4 loopback command helped during rehearsal; its proxy bypass is limited to this local request, not corporate networking globally. If the port is occupied, do not kill someone else's process. Use an approved alternative port and update both the host and request.
 

@@ -24,21 +24,21 @@ The opening includes a 15-minute guided portal walkthrough before individual pra
 
 1\. Orientation: Basic_Lab_VS_Code_Azure_Function_And_Dummy_Tracker.md, orientation-only route, Parts 1-2. Do not require Function tools for discovery.
 
-2\. SQL: Basic_Lab_01_Azure_SQL_Portal_And_VS_Code.md. Prepare access, create/read rows, add Notes, update and verify in portal and MSSQL.
+2\. SQL: [SQL guide](Basic_Lab_01_Azure_SQL_Portal_And_VS_Code.md). Connect and read the assigned table in portal and MSSQL. Only the explicitly approved own-table write route may create rows, add Notes or update data.
 
 3\. Blob: Basic_Lab_02_Blob_Storage_Portal_And_VS_Code.md. Private container, network/IAM, portal and terminal transfers, then hash comparison.
 
-4\. Function: return to the Function guide, Parts 3-5 and relevant Part 8 evidence/cleanup. Do not deploy to another attendee's host.
+4\. Function: return to the [Function guide](Basic_Lab_VS_Code_Azure_Function_And_Dummy_Tracker.md), Part 3 for local execution, Part 5 for approved cloud testing and Part 8 for evidence/cleanup. Publishing is not part of this core route.
 
 5\. Logs/KQL: Basic_Lab_03_Log_Analytics_Portal_And_VS_Code.md. Same synthetic query in portal and terminal; this does not prove telemetry ingestion.
 
-6\. Optional local UI: Function guide Parts 6-8, only if assigned.
+The Day 2 local tracker is a separate exercise. The optional dummy UI and its instructions are not supplied in this core pack.
 
 # Where are the project files?
 
 From the attendee-pack root open Labs\PortalAndVsCodeBasics for SQL/Blob/Logs; open Labs\VsCodePublishBasics\HelloAzureFunction for the Function.
 
-Optional - Portal Resource Creation contains additional creation exercises, not a requirement to create duplicate Azure resources. Owner approval is needed.
+Portal resource-creation guides are not supplied in this core pack. Use assigned resources; do not create duplicates.
 
 Record each result as Passed, Blocked or Not run. Keep passwords, tokens and real document content out of screenshots.
 
@@ -52,15 +52,17 @@ Updated 28 October 2026. Use this illustrated support section alongside the numb
 
 Diagram: day1 route
 
-Use fictional training data only. Orientation, SQL, Blob Storage, the HTTP Function and Logs/KQL are independent checkpoints. They do not form a connected document-processing application. The local dummy UI is optional.
+Use fictional training data only. Orientation, SQL, Blob Storage, the HTTP Function and Logs/KQL are independent checkpoints. They do not form a connected document-processing application. The Day 2 tracker is local-only.
 
 ## Find the correct folder without losing your chat
 
 Use the supplied attendee-pack location, not a path copied from the instructor's laptop. SQL, Blob and Logs use Labs\PortalAndVsCodeBasics; the Function uses Labs\VsCodePublishBasics\HelloAzureFunction. Quote paths containing spaces. In an existing terminal, Set-Location changes the terminal folder only. It does not change Explorer's workspace.
 
-Set-Location "C:\YOUR-ATTENDEE-PACK\Labs\PortalAndVsCodeBasics"\
-Get-Location\
+```powershell
+Set-Location "C:\YOUR-ATTENDEE-PACK\Labs\PortalAndVsCodeBasics"
+Get-Location
 Test-Path .\Samples\Logs\01-fictional-status.kql
+```
 
 Replace C:\YOUR-ATTENDEE-PACK before running. Test-Path should be True. File \> Open Folder may change the window's workspace; code --new-window opens another window and the earlier chat may remain in the original one. Use chat history or the original window to return; do not repeat completed cloud changes just because a new conversation appeared.
 
@@ -68,13 +70,15 @@ Replace C:\YOUR-ATTENDEE-PACK before running. Test-Path should be True. File \> 
 
 Portal sign-in, VS Code Azure Resources, MSSQL and Azure CLI have separate sign-in contexts. Confirm the approved tenant, subscription and target. Azure Reader shows resources but does not automatically grant SQL queries, Blob transfers, Function key access or publishing rights.
 
+```powershell
 az account show --query "{name:name,id:id,tenant:tenantId}" -o table
+```
 
 If CLI sign-in is missing, use az login with your approved account. Do not paste tokens, passwords, keys, connection strings or key-bearing URLs into chat or evidence. Never broaden network or role permissions to work around an unexplained error.
 
 ## 6. Finish safely and record your own evidence
 
-Record Passed, Blocked or Not run separately for each item: resource discovery; SQL portal connect/create/read; SQL MSSQL read/alter/update; portal recheck; Blob transfer and hashes in both directions; local Function build/invocation; publishing approval/result or test-only; cloud keyed response and keyless rejection; portal/terminal KQL match.
+Record Passed, Blocked or Not run separately for each item: resource discovery; SQL portal/MSSQL connection and reads; approved own-table writes and portal recheck, if assigned; Blob transfer and hashes in both directions; local Function build/invocation; approved cloud keyed response and keyless rejection; portal/terminal KQL match. Record publishing as Not run on the core route.
 
 Capture the target, time, command and expected/actual non-secret output. An instructor screenshot is an example, not your pass. SQL rows and schema do not prove which tool wrote them. A green deployment is not an invocation. A reported key rotation is not independent proof the exposed key was invalidated.
 

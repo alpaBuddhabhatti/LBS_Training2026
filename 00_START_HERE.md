@@ -1,9 +1,9 @@
 # LBS Azure training - core attendee pack
 
 This is the **core attendee edition** of the two-day corporate training.
-Use the complete ZIP supplied by the organiser for this Markdown-only edition.
-The GitHub link may still contain an earlier file-format edition. Extract the
-ZIP to a writable local folder before use. Keep `Day 1`, `Day 2` and `Labs`
+Use the complete ZIP supplied by the organiser, download the
+[GitHub repository](https://github.com/alpaBuddhabhatti/LBS_Training2026), or clone it.
+Extract any ZIP to a writable local folder before use. Keep `Day 1`, `Day 2` and `Labs`
 together so links work. Do not run projects from ZIP preview or mix editions.
 
 ## What is included

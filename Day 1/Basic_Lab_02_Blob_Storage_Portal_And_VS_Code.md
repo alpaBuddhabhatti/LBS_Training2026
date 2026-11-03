@@ -16,7 +16,7 @@ CORE ATTENDEE EDITION: Start with 00_START_HERE.md at the pack root. Only the co
 | Your private container | lab-ab01; replace ab01 with your assigned lowercase ID |
 | File uploaded in portal | portal-note.txt |
 | File uploaded from VS Code | vscode-note.txt |
-| Local working folder | C: |
+| Local working folder | Your extracted pack's Labs\PortalAndVsCodeBasics folder |
 
 Record your actual account, subscription and container. Never use Function deployment/host containers such as azure-webjobs-\* or app-package-\* for practice. An account used by Functions is not an empty scratch account.
 
@@ -127,16 +127,20 @@ Azure Storage Explorer is a separate optional desktop application, not the VS Co
 
 2.  Run:
 
-- Get-Location
-      Test-Path .\Samples\Storage\portal-note.txt
-      az version
+```powershell
+Get-Location
+Test-Path .\Samples\Storage\portal-note.txt
+az version
+```
 
 3.  Test-Path must be True. If az is missing, use the approved Azure CLI installation, reopen the terminal and retry. Do not paste commands into the VS Code search box.
 
 4.  Sign in and confirm your context:
 
-- az login
-      az account show --query "{name:name,id:id,tenant:tenantId}" -o table
+```powershell
+az login
+az account show --query "{name:name,id:id,tenant:tenantId}" -o table
+```
 
 5.  If needed, use `az account set --subscription "YOUR-SUBSCRIPTION-ID"`, replacing the placeholder, then rerun account show.
 
@@ -144,9 +148,12 @@ Azure Storage Explorer is a separate optional desktop application, not the VS Co
 
 7.  Set these values to YOUR actual resource names. Example below uses the instructor account and attendee ab01; replace both as necessary:
 
-- $account = "YOUR-ASSIGNED-STORAGE-ACCOUNT"$container = "lab-ab01"
+```powershell
+$account = "YOUR-ASSIGNED-STORAGE-ACCOUNT"
+$container = "lab-ab01"
+```
 
-8.  In every data command keep **–auth-mode login**. It uses your Entra identity; do not remove it and allow an account-key fallback.
+8.  In every data command keep **--auth-mode login**. It uses your Entra identity; do not remove it and allow an account-key fallback.
 
 9.  After EACH `az` command, run `$LASTEXITCODE` before the next command. Expected: **0**. Any other value means stop, read the error and fix the failed step before proceeding. Native CLI failures do not necessarily stop a Windows PowerShell session, even with `$ErrorActionPreference = 'Stop'`. Do not paste the whole lab as one uninterrupted script.
 
@@ -172,17 +179,21 @@ The two hashes must match. Matching proves a byte-for-byte round trip. If the do
 
 ## 7. Upload FROM VS Code and inspect in the portal
 
-1.  Open Samples-note.txt. It has a different fictional message.
+1.  Open Samples\Storage\vscode-note.txt. It has a different fictional message.
 
 2.  Save with Ctrl+S. Confirm you have not added real information.
 
 3.  From the same terminal run:
 
-- az storage blob upload --account-name $account --container-name $container --name "vscode-note.txt" --file ".\Samples\Storage\vscode-note.txt" --auth-mode login --overwrite false -o none
+```powershell
+az storage blob upload --account-name $account --container-name $container --name "vscode-note.txt" --file ".\Samples\Storage\vscode-note.txt" --auth-mode login --overwrite false -o none
+```
 
 4.  Stop on any error; silence with `-o none` is not proof by itself. Verify:
 
-- az storage blob list --account-name $account --container-name $container --auth-mode login --query "[].name" -o table
+```powershell
+az storage blob list --account-name $account --container-name $container --auth-mode login --query "[].name" -o table
+```
 
 5.  Expect portal-note.txt AND vscode-note.txt.
 
@@ -200,7 +211,7 @@ The two hashes must match. Matching proves a byte-for-byte round trip. If the do
 | 403 AuthorizationPermissionMismatch | Correct Entra account and scoped Blob Data Contributor; role assignment propagation can take time |
 | Account visible, files inaccessible | Management access and data access differ; also check network |
 | Firewall / private endpoint failure | Approved VPN/private DNS and network; do not open all networks |
-| Extension asks for key/listKeys | Use –auth-mode login terminal path; no privilege escalation |
+| Extension asks for key/listKeys | Use --auth-mode login terminal path; no privilege escalation |
 | Local file not found | Get-Location and Test-Path; open parent folder, quote spaced paths |
 | Blob already exists | Wrong/shared container or repeat run; inspect ownership, choose a fresh name; no blind overwrite |
 | Plain blob URL fails | Expected for private data; use authenticated portal/CLI download |
@@ -246,14 +257,16 @@ Today's rehearsal used different approved blob names: portal-check.txt for a sep
 
 ## Safe terminal download with an explicit failure check
 
-\$account = "YOUR-APPROVED-ACCOUNT"\
-\$container = "YOUR-ASSIGNED-CONTAINER"\
-\$blob = "portal-note.txt"\
-\$download = Join-Path \$env:TEMP ("lbs-download-" + \[guid\]::NewGuid() + ".txt")\
-az storage blob download --account-name \$account --container-name \$container --name \$blob --file "\$download" --auth-mode login --overwrite false -o none\
-if (\$LASTEXITCODE -ne 0) { throw "Download failed; inspect the Azure CLI error above." }\
-Get-Content -LiteralPath \$download\
-Get-FileHash -LiteralPath \$download -Algorithm SHA256
+```powershell
+$account = "YOUR-APPROVED-ACCOUNT"
+$container = "YOUR-ASSIGNED-CONTAINER"
+$blob = "portal-note.txt"
+$download = Join-Path $env:TEMP ("lbs-download-" + [guid]::NewGuid() + ".txt")
+az storage blob download --account-name $account --container-name $container --name $blob --file "$download" --auth-mode login --overwrite false -o none
+if ($LASTEXITCODE -ne 0) { throw "Download failed; inspect the Azure CLI error above." }
+Get-Content -LiteralPath $download
+Get-FileHash -LiteralPath $download -Algorithm SHA256
+```
 
 Replace all resource placeholders and use the actual approved blob name. A unique temporary file avoids overwriting existing work. Do not continue to read/hash a stale file after a failed transfer. Compare this download hash with the exact original file's Get-FileHash result.
 
@@ -261,8 +274,10 @@ Replace all resource placeholders and use the actual approved blob name. A uniqu
 
 In the browser's Downloads list, use Show in folder and copy the downloaded file's path. The browser may add (1) on repeated downloads. A quoted path pasted by itself does not calculate a hash. Pass it to Get-FileHash as shown below, replacing the example path.
 
-Get-FileHash '.\Samples\Storage\vscode-note.txt' -Algorithm SHA256\
+```powershell
+Get-FileHash '.\Samples\Storage\vscode-note.txt' -Algorithm SHA256
 Get-FileHash 'C:\YOUR-DOWNLOAD-FOLDER\vscode-upload-check.txt' -Algorithm SHA256
+```
 
 Compare all characters of the Hash values, not the file names or paths. Matching SHA256 values confirm a byte-for-byte match. Today's reverse transfer matched; that hash is not an expected constant for attendees who edit their fictional source. Check both directions separately. A downloaded file opening successfully or having the right size is weaker evidence than matching hashes.
 

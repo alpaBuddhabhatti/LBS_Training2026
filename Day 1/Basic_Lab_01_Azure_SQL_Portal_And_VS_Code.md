@@ -36,11 +36,13 @@ Confirm tenant, subscription, hostname, database and assigned table with the tut
 
 Azure portal \> SQL databases \> assigned database \> Query editor. Use the approved authentication. Confirm the database and execute the complete query below. Saving a query does not run it.
 
--- Run in each client before writes: the file does not choose or change your connection.\
--- Confirm the assigned database and identity; CheckedAtUtc records the server's UTC time.\
-SELECT DB_NAME() AS DatabaseName,\
-SUSER_SNAME() AS LoginName,\
-SYSUTCDATETIME() AS CheckedAtUtc;
+```sql
+-- Run in each client before writes: the file does not choose or change your connection.
+-- Confirm the assigned database and identity; CheckedAtUtc records the server's UTC time.
+SELECT DB_NAME() AS DatabaseName,
+       SUSER_SNAME() AS LoginName,
+       SYSUTCDATETIME() AS CheckedAtUtc;
+```
 
 Expected: one row containing your assigned DatabaseName, connected LoginName and server UTC time. This proves this query ran, not permission to change tables. A blank portal blade is not automatically a firewall error.
 
@@ -60,10 +62,12 @@ Expected: a row from the assigned database, not master. SSMS is an additional cl
 
 If the sample table name is not available, run this read-only table-list query in the assigned database:
 
-SELECT TABLE_SCHEMA, TABLE_NAME\
-FROM INFORMATION_SCHEMA.TABLES\
-WHERE TABLE_TYPE = 'BASE TABLE'\
+```sql
+SELECT TABLE_SCHEMA, TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_TYPE = 'BASE TABLE'
 ORDER BY TABLE_SCHEMA, TABLE_NAME;
+```
 
 Expected: tables visible to your identity. Confirm which one the tutor assigned before opening its rows. An empty list can mean no tables or restricted metadata visibility; it is not permission to create a replacement. In SSMS you can also expand Databases \> assigned database \> Tables and choose Refresh.
 
@@ -71,13 +75,21 @@ Expected: tables visible to your identity. Confirm which one the tutor assigned 
 
 If the tutor assigns dbo.VsCodeItems_assigned, run this exact read-only query in portal, VS Code and optionally SSMS. Otherwise replace schema/table with the actual approved target and confirm its columns.
 
-SELECT Id, Name, StatusFROM dbo.VsCodeItems_assignedORDER BY Id;
+```sql
+SELECT Id, Name, Status
+FROM dbo.VsCodeItems_assigned
+ORDER BY Id;
+```
 
 Expected for the retained example at preparation: ID 1 Fictional application / Completed; ID 2 Fictional statement / Needs review. These are example existing values, not your insertion evidence. If actual values differ, record them and ask the tutor; do not update a shared table to force the expected result.
 
 After confirming Notes exists, use this fuller query:
 
-SELECT Id, Name, Status, NotesFROM dbo.VsCodeItems_assignedORDER BY Id;
+```sql
+SELECT Id, Name, Status, Notes
+FROM dbo.VsCodeItems_assigned
+ORDER BY Id;
+```
 
 Example Notes: ID 1 Updated from VS Code; ID 2 NULL unless an approved later exercise changed it. NULL means no stored value. The text Updated from VS Code does not prove which client wrote it.
 
@@ -89,70 +101,76 @@ Skip this section without explicit write approval. Confirm your assigned databas
 
 Step 1 - IN THE PORTAL: run Samples\Sql\02-create-and-read.sql, reproduced below. CREATE defines columns; INSERT adds rows. Existing-row guards make reruns leave existing data intact.
 
--- Use only an approved disposable target; replace the attendee suffix everywhere.\
--- These existence checks make repeat runs leave existing tables/rows intact.\
-IF OBJECT_ID(N'dbo.VsCodeItems_ab01', N'U') IS NULL\
-BEGIN\
-CREATE TABLE dbo.VsCodeItems_ab01\
-(\
-Id int NOT NULL PRIMARY KEY,\
-Name nvarchar(100) NOT NULL,\
-Status nvarchar(30) NOT NULL\
-);\
-END;\
-\
--- N-prefixed strings store Unicode text in the nvarchar columns.\
-IF NOT EXISTS (SELECT 1 FROM dbo.VsCodeItems_ab01 WHERE Id = 1)\
-INSERT INTO dbo.VsCodeItems_ab01 (Id, Name, Status)\
-VALUES (1, N'Fictional application', N'Received');\
-\
-IF NOT EXISTS (SELECT 1 FROM dbo.VsCodeItems_ab01 WHERE Id = 2)\
-INSERT INTO dbo.VsCodeItems_ab01 (Id, Name, Status)\
-VALUES (2, N'Fictional statement', N'Needs review');\
-\
--- ORDER BY makes the portal and MSSQL results easy to compare.\
-SELECT Id, Name, Status\
-FROM dbo.VsCodeItems_ab01\
+```sql
+-- Use only an approved disposable target; replace the attendee suffix everywhere.
+-- These existence checks make repeat runs leave existing tables/rows intact.
+IF OBJECT_ID(N'dbo.VsCodeItems_ab01', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.VsCodeItems_ab01
+    (
+        Id int NOT NULL PRIMARY KEY,
+        Name nvarchar(100) NOT NULL,
+        Status nvarchar(30) NOT NULL
+    );
+END;
+
+-- N-prefixed strings store Unicode text in the nvarchar columns.
+IF NOT EXISTS (SELECT 1 FROM dbo.VsCodeItems_ab01 WHERE Id = 1)
+    INSERT INTO dbo.VsCodeItems_ab01 (Id, Name, Status)
+    VALUES (1, N'Fictional application', N'Received');
+
+IF NOT EXISTS (SELECT 1 FROM dbo.VsCodeItems_ab01 WHERE Id = 2)
+    INSERT INTO dbo.VsCodeItems_ab01 (Id, Name, Status)
+    VALUES (2, N'Fictional statement', N'Needs review');
+
+-- ORDER BY makes the portal and MSSQL results easy to compare.
+SELECT Id, Name, Status
+FROM dbo.VsCodeItems_ab01
 ORDER BY Id;
+```
 
 Expected on a fresh assigned table: ID 1 Fictional application / Received; ID 2 Fictional statement / Needs review. If this table already exists with different contents, stop and confirm ownership instead of dropping or overwriting it.
 
 Step 2 - IN VS CODE: read those same rows using SELECT Id, Name, Status FROM your assigned table ORDER BY Id. Then execute Samples\Sql\03-modify-and-check.sql below. ALTER changes structure; UPDATE changes row values. Keep GO so later statements compile after Notes exists. Keep WHERE Id = 1.
 
--- Use only your approved lab table; replace the attendee suffix everywhere.\
-IF OBJECT_ID(N'dbo.VsCodeItems_ab01', N'U') IS NULL\
-THROW 50001, 'Lab table missing. Run 02-create-and-read.sql on the approved database first.', 1;\
-\
--- Add the column only once. NULL lets existing rows have no Notes value.\
-IF COL_LENGTH(N'dbo.VsCodeItems_ab01', N'Notes') IS NULL\
-ALTER TABLE dbo.VsCodeItems_ab01 ADD Notes nvarchar(200) NULL;\
--- GO starts a new client batch so later statements compile after Notes exists.\
-GO\
-\
--- WHERE limits this repeatable update to ID 1; ID 2 must remain unchanged.\
-UPDATE dbo.VsCodeItems_ab01\
-SET Status = N'Completed',\
-Notes = N'Updated from VS Code'\
-WHERE Id = 1;\
-\
-SELECT Id, Name, Status, Notes\
-FROM dbo.VsCodeItems_ab01\
-ORDER BY Id;\
-\
--- Inspect schema separately from row values to confirm the ALTER took effect.\
-SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE\
-FROM INFORMATION_SCHEMA.COLUMNS\
-WHERE TABLE_SCHEMA = N'dbo'\
-AND TABLE_NAME = N'VsCodeItems_ab01'\
+```sql
+-- Use only your approved lab table; replace the attendee suffix everywhere.
+IF OBJECT_ID(N'dbo.VsCodeItems_ab01', N'U') IS NULL
+    THROW 50001, 'Lab table missing. Run 02-create-and-read.sql on the approved database first.', 1;
+
+-- Add the column only once. NULL lets existing rows have no Notes value.
+IF COL_LENGTH(N'dbo.VsCodeItems_ab01', N'Notes') IS NULL
+    ALTER TABLE dbo.VsCodeItems_ab01 ADD Notes nvarchar(200) NULL;
+-- GO starts a new client batch so later statements compile after Notes exists.
+GO
+
+-- WHERE limits this repeatable update to ID 1; ID 2 must remain unchanged.
+UPDATE dbo.VsCodeItems_ab01
+SET Status = N'Completed',
+    Notes = N'Updated from VS Code'
+WHERE Id = 1;
+
+SELECT Id, Name, Status, Notes
+FROM dbo.VsCodeItems_ab01
+ORDER BY Id;
+
+-- Inspect schema separately from row values to confirm the ALTER took effect.
+SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = N'dbo'
+  AND TABLE_NAME = N'VsCodeItems_ab01'
 ORDER BY ORDINAL_POSITION;
+```
 
 Expected: Notes is nullable nvarchar(200); ID 1 becomes Completed / Updated from VS Code; ID 2 stays Needs review / NULL. The WHERE condition restricts the changed row. Without WHERE, UPDATE can change every row.
 
 Step 3 - BACK IN THE PORTAL: replace the example table name below, run this new SELECT and compare with VS Code:
 
-SELECT Id, Name, Status, Notes\
-FROM dbo.VsCodeItems_ab01\
+```sql
+SELECT Id, Name, Status, Notes
+FROM dbo.VsCodeItems_ab01
 ORDER BY Id;
+```
 
 Expected: both clients show the same final values. Optional SSMS can read these too. If Notes is invalid, check the database/table and whether the ALTER batch executed before rerunning anything.
 
@@ -168,7 +186,9 @@ Moving between home Wi-Fi, the training venue, a hotspot or a VPN can change you
 
 1\. Open Azure portal \> SQL databases \> your assigned database \> Overview. Click the Server name link, then Security \> Networking. 2. Check Public network access. If it is Disabled/private-only, stop: use the approved VPN/private route and ask IT to check DNS/routing. Do not enable public access. Continue only for an owner-approved Selected networks route. 3. Have the authorised owner select Add your client IPv4 address, or update your approved temporary rule. Use a recognisable rule name. Set Start IPv4 address = End IPv4 address = the approved current public outbound IPv4. Do not use the laptop's private 192.168.x.x address from ipconfig. VPNs/proxies can affect the outbound address; if browser and SQL traffic use different routes, ask IT to confirm the address Azure SQL sees. 4. Click Save, allow a few minutes, reopen the page and verify the saved rule. If Add/Save is unavailable, ask the owner; do not request broad administrative access or enable "Allow Azure services and resources to access this server" as a shortcut. 5. Return to the database's Query editor, authenticate using the approved method, and execute the read-only check below. Reconnect in VS Code MSSQL and run the same check. Both should report the assigned database.
 
+```sql
 SELECT DB_NAME() AS DatabaseName;
+```
 
 6\. Ask the owner to remove an obsolete temporary rule only when confirmed no longer needed. Leave other attendees' and shared rules unchanged. Record the actual result as Passed / Blocked / Not run without secrets.
 

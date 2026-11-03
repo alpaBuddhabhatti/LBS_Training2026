@@ -22,9 +22,9 @@ samples, not a second or competing timetable.
 1. Orientation: [Function guide](../../Day%201/Basic_Lab_VS_Code_Azure_Function_And_Dummy_Tracker.md), Parts 1-2 only.
 2. [SQL](../../Day%201/Basic_Lab_01_Azure_SQL_Portal_And_VS_Code.md).
 3. [Blob Storage](../../Day%201/Basic_Lab_02_Blob_Storage_Portal_And_VS_Code.md).
-4. Function guide, Parts 3-5 and Function evidence/cleanup in Part 8.
+4. Function guide, Part 3 for local execution, Part 5 for approved cloud testing and Part 8 for evidence/cleanup. No publishing on the core route.
 5. [Logs/KQL](../../Day%201/Basic_Lab_03_Log_Analytics_Portal_And_VS_Code.md).
-6. Optional local UI: Function guide, Parts 6-8, only when assigned.
+The optional dummy UI is not supplied. Use the separate Day 2 tracker guide for local upload practice.
 
 Open the relevant project folder in VS Code before running its commands.
 Use fictional data, approved targets and your assigned table/container suffix.
@@ -45,7 +45,7 @@ Updated 28 October 2026.
 
 ![day1 route](<../../Day 1/Diagrams/day1-route.png>)
 
-Use fictional training data only. Orientation, SQL, Blob Storage, the HTTP Function and Logs/KQL are independent checkpoints. They do not form a connected document-processing application. The local dummy UI is optional.
+Use fictional training data only. Orientation, SQL, Blob Storage, the HTTP Function and Logs/KQL are independent checkpoints. They do not form a connected document-processing application. The Day 2 tracker is local-only.
 
 ### Find the correct folder without losing your chat
 
@@ -71,7 +71,7 @@ If CLI sign-in is missing, use az login with your approved account. Do not paste
 
 ### 6. Finish safely and record your own evidence
 
-Record Passed, Blocked or Not run separately for each item: resource discovery; SQL portal connect/create/read; SQL MSSQL read/alter/update; portal recheck; Blob transfer and hashes in both directions; local Function build/invocation; publishing approval/result or test-only; cloud keyed response and keyless rejection; portal/terminal KQL match.
+Record Passed, Blocked or Not run separately for each item: resource discovery; SQL portal/MSSQL connection and reads; approved own-table writes and portal recheck, if assigned; Blob transfer and hashes in both directions; local Function build/invocation; approved cloud keyed response and keyless rejection; portal/terminal KQL match. Record publishing as Not run on the core route.
 
 Capture the target, time, command and expected/actual non-secret output. An instructor screenshot is an example, not your pass. SQL rows and schema do not prove which tool wrote them. A green deployment is not an invocation. A reported key rotation is not independent proof the exposed key was invalidated.
 
